@@ -1,0 +1,9 @@
+{
+  "name": "Q-BYTES Quantum Lab",
+  "short_name": "Q-BYTES",
+  "start_url": "/lab/",
+  "display": "standalone",
+  "background_color": "#07101a",
+  "theme_color": "#070b13",
+  "icons": []
+}
