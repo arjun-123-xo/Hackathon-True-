@@ -74,33 +74,25 @@ box-shadow:0 6px 18px rgba(6,182,212,.25);
 }
 .quiz-nav button:hover{transform:translateY(-2px) scale(1.03)}
 .shuffle-btn-quantum{background:linear-gradient(135deg,#06b6d4,#7c3aed)!important;color:white!important;box-shadow:0 6px 18px rgba(124,58,237,.30)!important;}
-</style>
-
+<style>.profile-chip{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:inherit;background:var(--panel)}.avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#fff;font-weight:800}.quiz-nav button.active{outline:2px solid var(--cyan);outline-offset:2px}</style>
 </head>
 <body>
   <div class="wrap">
     <nav>
       <a href="index.html" class="brand"><span class="mark"></span>Q-BYTES</a>
-      <a href="index.html" style="color:var(--cyan); text-decoration:none; font-weight:700;">← Back to Home</a>
+      <div style="display:flex;align-items:center;gap:10px"><a href="index.html" style="color:var(--cyan);text-decoration:none;font-weight:700">← Home</a><a id="quizProfile" href="index.html" class="profile-chip" hidden><span class="avatar" id="quizAvatar">Q</span><span id="quizProfileName">Profile</span></a></div>
     </nav>
 
     <div class="score-board">
-      Current Score: <span id="score">0</span> / 50
+      Current Score: <span id="score">0</span> / 70
     </div>
 
     <div class="quiz-header">
       <h1>Quantum Quick Quizzes</h1>
-      <p>50 Questions to test and master your Quantum Computing knowledge.</p>
+      <p>70 Questions to test and master your Quantum Computing knowledge.</p>
     </div>
 
-    <div class="quiz-nav" aria-label="Quiz sections">
-      <button onclick="loadSection(1)">Foundations</button>
-      <button onclick="loadSection(2)">States</button>
-      <button onclick="loadSection(3)">Gates</button>
-      <button onclick="loadSection(4)">Circuits</button>
-      <button onclick="loadSection(5)">Algorithms</button>
-      <button class="shuffle-btn-quantum" onclick="shuffleQuestions()">🔀 Shuffle</button>
-    </div>
+    <div class="quiz-nav" id="quizTopics" aria-label="Quiz topics"></div>
 
     <div id="quiz-container"></div>
 
@@ -124,7 +116,7 @@ box-shadow:0 6px 18px rgba(6,182,212,.25);
         const data = await response.json();
         questions = data.questions || [];
         if (!questions.length) throw new Error('No questions returned');
-        renderQuiz(); setTimeout(()=>loadSection(1),0);
+        renderQuiz(); setTimeout(()=>renderTopicNav(),0);
       } catch (error) {
         console.error(error);
         // The original question set is preserved below in the fallback block.
@@ -140,16 +132,8 @@ box-shadow:0 6px 18px rgba(6,182,212,.25);
     
 let currentView=[];
 
-function loadSection(section){
- const start=(section-1)*10;
- currentView=questions.slice(start,start+10);
- renderSubset(currentView);
-}
-
-function shuffleQuestions(){
- currentView=[...questions].sort(()=>Math.random()-0.5).slice(0,10);
- renderSubset(currentView);
-}
+function loadSection(topic){currentView=topic==='All'?questions:questions.filter(q=>q.topic===topic);renderSubset(currentView);document.querySelectorAll('#quizTopics button').forEach(b=>b.classList.toggle('active',b.dataset.topic===topic));}
+function shuffleQuestions(){currentView=[...questions].sort(()=>Math.random()-0.5).slice(0,10);renderSubset(currentView);}
 
 function renderSubset(list){
  const container=document.getElementById('quiz-container');
@@ -211,6 +195,9 @@ function renderQuiz() {
         container.appendChild(card);
       });
     }
+
+function renderTopicNav(){const topics=['All',...new Set(questions.map(q=>q.topic).filter(Boolean))];const box=document.getElementById('quizTopics');box.innerHTML=topics.map(t=>`<button data-topic="${t}">${t}</button>`).join('')+`<button class="shuffle-btn-quantum" data-shuffle="1">🔀 Shuffle</button>`;box.querySelectorAll('button').forEach(b=>b.onclick=()=>b.dataset.shuffle?shuffleQuestions():loadSection(b.dataset.topic));loadSection('All');}
+function initQuizProfile(){const email=localStorage.getItem('qbytes-user-email'),el=document.getElementById('quizProfile');if(!email||!el)return;el.hidden=false;const name=email.split('@')[0];document.getElementById('quizProfileName').textContent=name;document.getElementById('quizAvatar').textContent=(name[0]||'Q').toUpperCase();}initQuizProfile();
 
     async function selectOption(btn, qIdx, selectedIdx, correctIdx, parentDiv) {
       if (answered.has(qIdx)) return;

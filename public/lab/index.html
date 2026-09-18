@@ -15,7 +15,7 @@
     <div class="logo">Q</div>
     <div><h1>Quantum Lab</h1><span>Build, run, and understand circuits</span></div>
   </div>
-  <div class="top-actions">
+  <div class="top-actions"><a class="profile-chip" id="labProfile" href="../index.html" hidden><span class="avatar" id="labAvatar">Q</span><span id="labProfileName">Profile</span></a>
     <select id="connectionMode" hidden><option value="offline" selected>Offline</option></select>
     <span id="connectionStatus" class="connection-status offline">🟢 Offline Mode</span>
     <label class="mode">Execution
@@ -34,16 +34,7 @@
   <aside class="sidebar">
     <div class="side-title">GATES</div>
     <p class="muted">Drag a gate into a circuit slot.</p>
-    <div class="gate-grid">
-      <div class="gate" draggable="true" data-gate="H"><b>H</b><span>Hadamard</span></div>
-      <div class="gate" draggable="true" data-gate="X"><b>X</b><span>Pauli-X</span></div>
-      <div class="gate" draggable="true" data-gate="Y"><b>Y</b><span>Pauli-Y</span></div>
-      <div class="gate" draggable="true" data-gate="Z"><b>Z</b><span>Pauli-Z</span></div>
-      <div class="gate" draggable="true" data-gate="S"><b>S</b><span>Phase</span></div>
-      <div class="gate" draggable="true" data-gate="T"><b>T</b><span>π/4</span></div>
-      <div class="gate gate-wide" draggable="true" data-gate="CX"><b>⊕</b><span>CNOT</span></div>
-      <div class="gate gate-wide" draggable="true" data-gate="SWAP"><b>⇄</b><span>SWAP</span></div>
-    </div>
+    <div class="gate-library"><div class="gate-group"><h4>1-Qubit Gates</h4><div class="gate-grid"><div class="gate" draggable="true" data-gate="H"><b>H</b><span>Hadamard</span></div><div class="gate" draggable="true" data-gate="X"><b>X</b><span>Pauli-X</span></div><div class="gate" draggable="true" data-gate="Y"><b>Y</b><span>Pauli-Y</span></div><div class="gate" draggable="true" data-gate="Z"><b>Z</b><span>Pauli-Z</span></div><div class="gate" draggable="true" data-gate="S"><b>S</b><span>Phase</span></div><div class="gate" draggable="true" data-gate="T"><b>T</b><span>π/4</span></div><div class="gate" draggable="true" data-gate="RX"><b>Rx</b><span>X rotation</span></div><div class="gate" draggable="true" data-gate="RY"><b>Ry</b><span>Y rotation</span></div><div class="gate" draggable="true" data-gate="RZ"><b>Rz</b><span>Z rotation</span></div></div></div><div class="gate-group"><h4>2-Qubit Gates</h4><div class="gate-grid"><div class="gate gate-wide" draggable="true" data-gate="CX"><b>⊕</b><span>CNOT</span></div><div class="gate gate-wide" draggable="true" data-gate="SWAP"><b>⇄</b><span>SWAP</span></div><div class="gate gate-wide" draggable="true" data-gate="CZ"><b>◉</b><span>Controlled-Z</span></div></div></div><div class="gate-group gate-group-3"><h4>3-Qubit Gates</h4><div class="gate-grid"><div class="gate gate-wide" draggable="true" data-gate="TOFFOLI"><b>CCX</b><span>Toffoli</span></div><div class="gate gate-wide" draggable="true" data-gate="FREDKIN"><b>CSWAP</b><span>Fredkin</span></div><div class="gate gate-wide" draggable="true" data-gate="CCZ"><b>CCZ</b><span>CCZ</span></div></div></div><div class="gate-group gate-group-4"><h4>4-Qubit Gates</h4><div class="gate-grid"><div class="gate gate-wide" draggable="true" data-gate="MCX"><b>MCX</b><span>3-Control X</span></div><div class="gate gate-wide" draggable="true" data-gate="MCSWAP"><b>MCS</b><span>Multi-Control SWAP</span></div><div class="gate gate-wide" draggable="true" data-gate="MCZ"><b>MCZ</b><span>3-Control Z</span></div></div></div></div>
 
     <div class="side-title space">SYSTEM</div>
     <div class="field"><label>Qubits</label><select id="qubits"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>

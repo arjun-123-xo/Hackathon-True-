@@ -267,6 +267,7 @@ header p{max-width:680px;margin:auto;color:var(--muted);line-height:1.7;font-siz
 .new-game{background:linear-gradient(135deg,var(--violet),var(--cyan))}
 .home-btn{background:#252e70}
 @media(max-width:700px){.ws-container{padding:15px 8px}h1{font-size:25px}.puzzle-box{padding:10px}.grid{grid-template-columns:repeat(15,21px);grid-template-rows:repeat(15,21px);gap:2px}.cell{width:21px;height:21px;font-size:9px;border-radius:3px}.hints{width:100%}}
+.gate-challenge{width:min(820px,calc(100% - 28px));margin:30px auto 80px;text-align:center}.challenge-head{display:flex;justify-content:space-between;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:var(--panel);font:700 12px 'DM Mono';color:var(--muted)}.target-card{margin:18px 0;padding:34px;border-radius:22px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow)}.target-kicker{font:700 11px 'DM Mono';color:var(--cyan)}.target-card h2{font-size:clamp(24px,4vw,38px)}.state-flow{padding:15px;border-radius:14px;background:rgba(124,58,237,.08);font:700 19px 'DM Mono';color:var(--violet)}.gc-options{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gc-option{padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--ink);font:800 22px 'DM Mono';cursor:pointer}.gc-option span{display:block;font:600 11px Manrope;color:var(--muted);margin-top:7px}.gc-option.correct{border-color:var(--good);background:rgba(21,128,61,.1)}.gc-option.wrong{border-color:var(--bad);background:rgba(185,28,28,.1)}.gc-feedback{min-height:70px;padding:14px;color:var(--muted);line-height:1.6}@media(max-width:700px){.gc-options{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -287,6 +288,7 @@ header p{max-width:680px;margin:auto;color:var(--muted);line-height:1.7;font-siz
 
 <main class="games-section">
 <div class="games-grid">
+<div class="game-card" onclick="selectGame('gatechallenge')"><div class="game-icon">⚡</div><div class="game-content"><h2 class="game-title">Quantum Gate Challenge</h2><p class="game-desc">Predict the gate from the target effect and learn why it works.</p><div class="game-tags"><span class="tag">Interactive</span><span class="tag">Gate Mastery</span><span class="tag">Learn by Play</span></div></div><button class="play-btn">Play Now</button></div>
 <div class="game-card" onclick="selectGame('wordsearch')">
 <div class="game-icon">🔤</div>
 <div class="game-content">
@@ -393,33 +395,7 @@ header p{max-width:680px;margin:auto;color:var(--muted);line-height:1.7;font-siz
 </div>
 </div>
 
-<div class="hints">
-<h2>🔍 Find the Answer</h2>
-<p class="instruction">Read each clue and drag across the answer in the puzzle.</p>
-
-<div class="hint" id="hint-QUBIT">
-<div class="question"><span class="hint-number">1.</span>Basic unit of quantum information.</div>
-<div class="answer-ws">✓ QUBIT</div>
-</div>
-
-<div class="hint" id="hint-SUPERPOSITION">
-<div class="question"><span class="hint-number">2.</span>A quantum state in which a qubit can exist in a combination of multiple states.</div>
-<div class="answer-ws">✓ SUPERPOSITION</div>
-</div>
-
-<div class="hint" id="hint-ENTANGLEMENT">
-<div class="question"><span class="hint-number">3.</span>A quantum phenomenon where two or more particles become strongly correlated.</div>
-<div class="answer-ws">✓ ENTANGLEMENT</div>
-</div>
-
-<div class="hint" id="hint-INTERFERENCE">
-<div class="question"><span class="hint-number">4.</span>A quantum phenomenon in which quantum states combine and affect the probability of outcomes.</div>
-<div class="answer-ws">✓ INTERFERENCE</div>
-</div>
-
-<div class="hint" id="hint-MEASUREMENT">
-<div class="question"><span class="hint-number">5.</span>The process of observing a quantum state to obtain a classical result.</div>
-<div class="answer-ws">✓ MEASUREMENT</div>
+<div class="hints"><h2>🔍 Find the Answer</h2><p class="instruction">Read each clue and drag across the answer in the puzzle.</p><div id="hintList"></div></div></div>
 </div>
 </div>
 </div>
@@ -428,6 +404,8 @@ header p{max-width:680px;margin:auto;color:var(--muted);line-height:1.7;font-siz
 </div>
 
 </div>
+
+<div id="gatechallengeGame" class="hidden"><header><div class="eyebrow">Play • Predict • Learn</div><h1>⚡ Quantum Gate Challenge</h1><p>Choose the operation that creates the target effect. Every answer teaches the why.</p></header><main class="gate-challenge"><div class="challenge-head"><span id="gcLevel">Challenge 1 / 12</span><span id="gcScore">Score: 0</span></div><div class="target-card"><div class="target-kicker">TARGET EFFECT</div><h2 id="gcPrompt"></h2><div class="state-flow" id="gcFlow"></div></div><div id="gcOptions" class="gc-options"></div><div id="gcFeedback" class="gc-feedback"></div><button class="btn primary" id="gcNext">Next Challenge →</button></main></div>
 
 <script>
 const savedTheme = localStorage.getItem('qbytes-theme');
@@ -444,6 +422,9 @@ function selectGame(game) {
   } else if (game === 'wordsearch') {
     document.getElementById('wordsearchGame').classList.remove('hidden');
     newGame();
+  } else if (game === 'gatechallenge') {
+    document.getElementById('gatechallengeGame').classList.remove('hidden');
+    initGateChallenge();
   }
   
   document.getElementById('backBtn').textContent = '← Back to Games';
@@ -456,10 +437,17 @@ function showGameSelection() {
   document.getElementById('gameSelection').classList.remove('hidden');
   document.getElementById('flashcardGame').classList.add('hidden');
   document.getElementById('wordsearchGame').classList.add('hidden');
+  document.getElementById('gatechallengeGame').classList.add('hidden');
   document.getElementById('backBtn').textContent = '← Back to Home';
   document.getElementById('backBtn').href = 'index.html';
   document.getElementById('backBtn').onclick = null;
 }
+
+
+const WORD_CLUES={QUBIT:'Basic unit of quantum information.',SUPERPOSITION:'Combination of basis-state amplitudes.',ENTANGLEMENT:'Non-classical correlation between quantum systems.',INTERFERENCE:'Amplitude effects that amplify or cancel outcomes.',MEASUREMENT:'Process that produces a classical result.',HADAMARD:'Gate that creates balanced superposition.',CNOT:'Controlled gate that flips a target conditionally.',GROVER:'Quantum search algorithm with quadratic query improvement.',SHOR:'Algorithm for integer factorization on a fault-tolerant quantum computer.',DECOHERENCE:'Loss of quantum coherence through environmental interaction.',TELEPORTATION:'Protocol for transferring an unknown quantum state using entanglement and classical communication.',PHOTON:'A light particle used as a photonic qubit.',AMPLITUDE:'Complex quantity whose squared magnitude gives probability.',ORACLE:'Black-box operation used to mark solutions.',EIGENSTATE:'State mapped to itself times a scalar by an operator.'};
+function renderWordHints(){const b=document.getElementById('hintList');if(b)b.innerHTML=words.map((w,i)=>`<div class="hint" id="hint-${w}"><div class="question"><span class="hint-number">${i+1}.</span>${WORD_CLUES[w]}</div><div class="answer-ws">✓ ${w}</div></div>`).join('');}
+const GATE_CHALLENGES=[['Which gate flips |0⟩ to |1⟩?','|0⟩ → ? → |1⟩',['X','H','Z'],'X','Pauli-X is the quantum NOT gate.'],['Which gate creates 50/50 superposition?','|0⟩ → ? → (|0⟩+|1⟩)/√2',['H','Z','S'],'H','Hadamard creates equal amplitudes.'],['Which gate flips phase?','|1⟩ → ? → −|1⟩',['Z','X','SWAP'],'Z','Pauli-Z changes the phase sign of |1⟩.'],['Which gate conditionally flips a target?','control=1 ⇒ target flips',['CNOT','H','T'],'CNOT','CNOT flips the target only when control is 1.'],['Which gate exchanges two states?','|a,b⟩ → |b,a⟩',['SWAP','CNOT','X'],'SWAP','SWAP exchanges two qubit states.'],['Which gate applies π/2 phase?','|1⟩ → i|1⟩',['S','T','Z'],'S','S is diag(1,i).'],['Which gate applies π/4 phase?','|1⟩ → e^(iπ/4)|1⟩',['T','S','X'],'T','T applies a π/4 phase.'],['Which gate rotates around X?','Bloch sphere X-axis rotation',['RX','RZ','H'],'RX','RX rotates around the X axis.'],['Which 3-qubit gate uses two controls?','CC1 ⇒ target flips',['TOFFOLI','CNOT','SWAP'],'TOFFOLI','Toffoli is CCNOT.'],['Which gate is controlled-SWAP?','control=1 ⇒ swap targets',['FREDKIN','TOFFOLI','CNOT'],'FREDKIN','Fredkin is CSWAP.'],['Which 4-qubit gate uses three controls for X?','111 ⇒ target flips',['MCX','SWAP','TOFFOLI'],'MCX','MCX applies X when all controls are 1.'],['Which gate changes relative phase?','phase-sensitive rotation',['RZ','X','SWAP'],'RZ','RZ changes relative phase; interference can reveal it.']];
+let gcIndex=0,gcScore=0,gcAnswered=false;function initGateChallenge(){gcIndex=0;gcScore=0;renderGateChallenge();document.getElementById('gcNext').onclick=()=>{if(!gcAnswered)return;gcIndex=(gcIndex+1)%GATE_CHALLENGES.length;renderGateChallenge();};}function renderGateChallenge(){const c=GATE_CHALLENGES[gcIndex];gcAnswered=false;document.getElementById('gcLevel').textContent=`Challenge ${gcIndex+1} / ${GATE_CHALLENGES.length}`;document.getElementById('gcScore').textContent=`Score: ${gcScore}`;document.getElementById('gcPrompt').textContent=c[0];document.getElementById('gcFlow').textContent=c[1];document.getElementById('gcFeedback').textContent='Choose a gate to reveal the explanation.';const b=document.getElementById('gcOptions');b.innerHTML=c[2].map(x=>`<button class="gc-option" data-gate="${x}">${x}<span>quantum gate</span></button>`).join('');b.querySelectorAll('button').forEach(x=>x.onclick=()=>answerGate(x,c));}function answerGate(btn,c){if(gcAnswered)return;gcAnswered=true;const ok=btn.dataset.gate===c[3];btn.classList.add(ok?'correct':'wrong');if(!ok)[...document.querySelectorAll('.gc-option')].find(x=>x.dataset.gate===c[3])?.classList.add('correct');if(ok)gcScore++;document.getElementById('gcScore').textContent=`Score: ${gcScore}`;document.getElementById('gcFeedback').innerHTML=`<strong>${ok?'✓ Correct!':'✕ Not quite.'}</strong> ${c[4]}`;}
 
 // QUANTUM FLASHCARD - SHORT CONCISE ANSWERS
 const LEVELS = [
@@ -523,7 +511,8 @@ const LEVELS = [
 ["Quantum Noise","What is it?","Unwanted interactions/imperfections disturbing qubit states or gates. Reduces fidelity."],
 ["Decoherence","What is it?","Loss of quantum coherence from environment interaction. Turns quantum info into classical mixtures."],
 ["Error Correction","Why needed?","Protects logical info from physical errors. Encodes redundantly across multiple physical qubits."],
-["Surface Code","What is it?","Topological QEC code. Protects logical qubits using local stabilizer measurements on 2D qubit layout."]]}
+["Surface Code","What is it?","Topological QEC code. Protects logical qubits using local stabilizer measurements on 2D qubit layout."]]},
+{title:"Level 8 — Phase & Rotation",cards:[["Relative Phase", "Why does relative phase matter?", "It changes interference even when immediate measurement probabilities are unchanged."], ["Rx Rotation", "What does Rx(θ) do?", "Rotates a qubit around the X axis on the Bloch sphere."], ["Ry Rotation", "What does Ry(θ) do?", "Rotates a qubit around the Y axis."], ["Rz Rotation", "What does Rz(θ) do?", "Rotates around Z and changes relative phase."], ["Global Phase", "Does global phase change probabilities?", "No. A common phase factor does not change observable probabilities."]]},{title:"Level 9 — Entanglement",cards:[["EPR Pair", "What is an EPR pair?", "A maximally entangled two-qubit state."], ["Bell Measurement", "Where is Bell measurement useful?", "Teleportation and dense coding."], ["No-Signalling", "Can entanglement send information instantly?", "No. Classical communication is still required."], ["CHSH", "What does CHSH test?", "A Bell inequality used to study non-classical correlations."], ["Entanglement Swapping", "What is it?", "A measurement can entangle systems that did not directly interact."]]},{title:"Level 10 — Quantum Measurement",cards:[["Projective Measurement", "What is it?", "A measurement using projectors that returns an allowed outcome and updates the state."], ["Observable", "What represents a measurable quantity?", "A Hermitian operator."], ["Expectation Value", "What is it?", "The probability-weighted average of outcomes."], ["Measurement Basis", "Can changing basis change statistics?", "Yes. A different basis resolves different state components."], ["Repeated Shots", "Why run many shots?", "To estimate the underlying probability distribution."]]},{title:"Level 11 — Quantum Noise",cards:[["Bit Flip", "What is it?", "An X-type error that swaps |0⟩ and |1⟩."], ["Phase Flip", "What is it?", "A Z-type error that changes the sign of |1⟩."], ["Depolarizing Noise", "What is it?", "A model using random Pauli errors with a given probability."], ["T1 Relaxation", "What does T1 describe?", "Energy relaxation toward the ground state."], ["T2 Dephasing", "What does T2 describe?", "Loss of phase coherence."]]},{title:"Level 12 — Error Correction",cards:[["Logical Qubit", "What is it?", "Encoded quantum information designed to be more robust."], ["Syndrome", "What is a syndrome?", "Information that helps identify errors without directly measuring the logical state."], ["Repetition Code", "What can it demonstrate?", "Correction of certain bit-flip errors."], ["Fault Tolerance", "What is it?", "Reliable computation despite physical errors below suitable thresholds."], ["Threshold", "What is a threshold?", "A boundary below which encoding can suppress logical errors."]]},{title:"Level 13 — Quantum Algorithms II",cards:[["Amplitude Amplification", "What is it?", "A technique that boosts amplitudes of marked states."], ["Amplitude Estimation", "What can it estimate?", "A probability or amplitude using phase-estimation ideas."], ["Quantum Walk", "What is it?", "A quantum analogue of a random walk using interference."], ["Variational Circuit", "What is it?", "A parameterized circuit optimized by a classical routine."], ["HHL", "What problem does HHL target?", "Certain linear-system problems under strong assumptions."]]},{title:"Level 14 — Quantum Communication",cards:[["QKD", "What is QKD?", "Quantum key distribution establishes shared secret keys."], ["BB84", "What is BB84?", "A prepare-and-measure QKD protocol."], ["Superdense Coding", "What does it achieve?", "Two classical bits can be encoded by sending one qubit with shared entanglement."], ["Quantum Repeater", "Why use repeaters?", "To help extend entanglement over long distances."], ["Entanglement Swapping", "What happens?", "It can connect shorter entangled links."]]},{title:"Level 15 — Quantum Hardware",cards:[["Superconducting Qubit", "What is it?", "An engineered quantum circuit operated at cryogenic temperatures."], ["Trapped Ion", "How are ions controlled?", "With electromagnetic fields and lasers."], ["Photonic Qubit", "How can photons encode qubits?", "Using properties such as polarization or path."], ["Neutral Atom", "What are neutral-atom qubits?", "Individual atoms trapped and optically controlled."], ["Gate Fidelity", "What does it measure?", "How closely an operation matches its intended operation."]]},{title:"Level 16 — Quantum Complexity",cards:[["BQP", "What is BQP?", "Problems solvable by quantum computers in polynomial time with bounded error."], ["Query Complexity", "What does it count?", "Input or oracle queries required by an algorithm."], ["Quadratic Speedup", "What does Grover demonstrate?", "A square-root reduction in oracle queries for unstructured search."], ["NISQ", "What does NISQ mean?", "Noisy Intermediate-Scale Quantum."], ["Quantum Advantage", "Is every quantum algorithm exponentially faster?", "No. Speedups depend on the problem and algorithm."]]},{title:"Level 17 — Quantum Applications",cards:[["Quantum Chemistry", "Why simulate molecules?", "Quantum computers can represent molecular states in suitable models."], ["Optimization", "Where are quantum methods studied?", "Some combinatorial optimization and sampling problems."], ["Quantum Machine Learning", "What is QML?", "A learning pipeline that includes quantum circuits."], ["Post-Quantum Cryptography", "Why is it important?", "It aims to resist attacks from future quantum computers."], ["Materials Science", "How can quantum simulation help?", "It can model electronic and magnetic behavior of materials."]]}
 ];
 
 let levelIndex=0, cardIndex=0;
@@ -589,7 +578,7 @@ function showComplete(){$("gameView").classList.add("hidden");$("complete").clas
 function showGame(){$("gameView").classList.remove("hidden");$("complete").classList.remove("show");renderLevels();renderCard();}
 
 // WORD SEARCH
-const words = ["QUBIT","SUPERPOSITION","ENTANGLEMENT","INTERFERENCE","MEASUREMENT"];
+const words = ["QUBIT","SUPERPOSITION","ENTANGLEMENT","INTERFERENCE","MEASUREMENT","HADAMARD","CNOT","GROVER","SHOR","DECOHERENCE","TELEPORTATION","PHOTON","AMPLITUDE","ORACLE","EIGENSTATE"];
 const gridSize = 15;
 let grid = [], placedWords = [], isDragging = false, startCell = null, selectedCells = [], foundWords = [];
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -606,7 +595,7 @@ function selectLine(endCell){if(!startCell)return;const sr=Number(startCell.data
 function endSelection(e){if(!isDragging)return;isDragging=false;checkSelection();startCell=null;}
 function checkSelection(){if(selectedCells.length<2){clearSelection();return;}let word="";selectedCells.forEach(c=>word+=c.textContent);let rev=word.split("").reverse().join("");let match=null;for(const w of words){if(!foundWords.includes(w)&&(word===w||rev===w)){match=w;break;}}if(match){selectedCells.forEach(c=>{c.classList.remove("selecting");c.classList.add("found");});foundWords.push(match);document.getElementById("hint-"+match).classList.add("solved");document.getElementById("message").textContent="✓ "+match+"!";if(foundWords.length===words.length)setTimeout(()=>{document.getElementById("message").textContent="🎉 All found!";},300);}else{document.getElementById("message").textContent="Try again! 🔍";clearSelection();}selectedCells=[];}
 function clearSelection(){document.querySelectorAll(".cell.selecting").forEach(c=>c.classList.remove("selecting"));selectedCells=[];}
-function newGame(){createEmptyGrid();placedWords=[];foundWords=[];selectedCells=[];isDragging=false;startCell=null;document.getElementById("message").textContent="";document.querySelectorAll(".hint").forEach(h=>h.classList.remove("solved"));words.forEach(w=>placeWord(w));fillEmptyCells();drawGrid();}
+function newGame(){renderWordHints();createEmptyGrid();placedWords=[];foundWords=[];selectedCells=[];isDragging=false;startCell=null;document.getElementById("message").textContent="";document.querySelectorAll(".hint").forEach(h=>h.classList.remove("solved"));words.forEach(w=>placeWord(w));fillEmptyCells();drawGrid();}
 document.addEventListener("mouseup",()=>{if(isDragging){isDragging=false;checkSelection();startCell=null;}});
 window.addEventListener('DOMContentLoaded', () => {
   if (location.hash === '#flashcard') { selectGame('flashcard'); requestAnimationFrame(() => window.scrollTo(0, 0)); }

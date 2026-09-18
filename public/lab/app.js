@@ -9,7 +9,7 @@ let camera = {x:-18,y:28,zoom:1};
 let activeTool = "build";
 
 const singleGates = ["H","X","Y","Z","S","T"];
-const multiGates = ["CX","SWAP"];
+const multiGates = ["CX","SWAP","CZ","TOFFOLI","FREDKIN","CCZ","MCX","MCSWAP","MCZ"];
 
 function toast(text){
   $("toast").textContent = text;
@@ -29,6 +29,8 @@ async function api(path, options={}){
   return data;
 }
 
+const gateArity={CX:2,SWAP:2,CZ:2,TOFFOLI:3,FREDKIN:3,CCZ:3,MCX:4,MCSWAP:4,MCZ:4};
+function refreshGateLibrary(){document.querySelector(".gate-group-3")?.style.setProperty("display",n>=3?"block":"none");document.querySelector(".gate-group-4")?.style.setProperty("display",n>=4?"block":"none");document.querySelectorAll(".gate").forEach(el=>{const ar=gateArity[el.dataset.gate]||1;el.draggable=ar<=n;el.style.opacity=ar<=n?"1":".38";});}
 function buildGrid(){
   $("selectedQubit").innerHTML="";
   for(let q=0;q<n;q++){
@@ -57,6 +59,7 @@ function buildGrid(){
     }
     $("circuit").appendChild(row);
   }
+  refreshGateLibrary();
   renderCircuit();
   updateCode();
 }
@@ -69,13 +72,7 @@ function setSingle(q,col,gate){
   circuit.push({gate,qubits:[q],column:col});
   renderCircuit(); updateCode();
 }
-function placeMulti(gate,q,col){
-  const other=(q+1)%n;
-  if(n<2) return toast("Use at least 2 qubits for a multi-qubit gate.");
-  removeAt(q,col); removeAt(other,col);
-  circuit.push({gate,qubits:[q,other],column:col});
-  renderCircuit(); updateCode();
-}
+function placeMulti(gate,q,col){const ar=gateArity[gate]||2;if(n<ar)return toast(`Use at least ${ar} qubits for ${gate}.`);const qs=Array.from({length:ar},(_,i)=>(q+i)%n);qs.forEach(x=>removeAt(x,col));circuit.push({gate,qubits:qs,column:col});renderCircuit();updateCode();}
 function cycleSlot(q,col){
   const existing=slotGate(q,col);
   if(existing){ removeAt(q,col); renderCircuit(); updateCode(); return; }
@@ -321,5 +318,6 @@ $("qsphere").addEventListener("wheel",e=>{e.preventDefault();qRot.zoom=Math.max(
 window.addEventListener("resize",()=>{renderQSphere(lastResult?.amplitudes||[]);renderBloch()});
 
 buildGrid();health();
+function initLabProfile(){const email=localStorage.getItem("qbytes-user-email"),el=$("labProfile");if(!email||!el)return;el.hidden=false;const name=email.split("@")[0];$("labProfileName").textContent=name;$("labAvatar").textContent=(name[0]||"Q").toUpperCase();}initLabProfile();
 initTheme();
 renderQSphere([]);renderBloch();

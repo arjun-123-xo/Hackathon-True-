@@ -333,7 +333,7 @@
     .play-learn-btn:hover {
       transform: translateY(-3px) scale(1.03);
     }
-  </style>
+  .top-profile{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);padding:5px 10px 5px 6px;border:1px solid var(--line);border-radius:999px;background:var(--input-bg);font-size:12px;font-weight:800}.top-avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--cyan),var(--violet))}.adv-controls{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end;margin-top:22px}.adv-controls label{font-size:12px;font-weight:700;color:var(--muted)}.adv-controls input{display:block;width:100%;margin-top:8px}.adv-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.adv-metrics>div{padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--circuit-bg)}.adv-metrics span{display:block;font:700 10px 'DM Mono';color:var(--muted)}.adv-metrics strong{display:block;margin:8px 0 4px;font-size:22px}.adv-metrics small{color:var(--muted);font-size:11px}.advantage-lab canvas{width:100%;border:1px solid var(--line);border-radius:14px;background:var(--circuit-bg)}.adv-result{margin-top:14px;padding:12px;border-radius:12px;background:rgba(15,118,110,.08);color:var(--cyan);font-weight:800}@media(max-width:760px){.adv-controls,.adv-metrics{grid-template-columns:1fr}.top-profile span:last-child{display:none}}</style>
 </head>
 
 <body>
@@ -346,9 +346,7 @@
         <a href="#simulator">Simulator</a>
         <a href="quiz.html">Quizzes</a>
         <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark theme">🌙</button>
-        <div class="auth-actions">
-          <button class="auth-btn" id="authBtn" onclick="openAuth()">Sign in / Sign up</button>
-        </div>
+        <div class="auth-actions"><button class="auth-btn" id="authBtn" onclick="openAuth()">Sign in / Sign up</button><a id="topProfile" class="top-profile" href="#profile" hidden><span class="top-avatar" id="topAvatar">Q</span><span id="topProfileName">Profile</span></a></div>
       </div>
     </nav>
   </div>
@@ -494,7 +492,7 @@
      <div class="doctor-box quiz-promo" style="text-align: center;">
        <div class="section-label">Next step · Practice</div>
        <h2>Quantum Quick Quizzes</h2>
-       <p style="max-width: 600px; margin: 10px auto 25px;">Turn each flashcard into confidence with 50 tailored questions across foundational to advanced concepts.</p>
+       <p style="max-width: 600px; margin: 10px auto 25px;">Turn each flashcard into confidence with 70 topic-based questions across foundational to advanced concepts.</p>
        <a href="quiz.html" class="primary" style="font-size: 16px; padding: 14px 28px;">Start solving →</a>
      </div>
     </section>
@@ -681,6 +679,7 @@
         if(!response.ok) throw new Error(data.error || 'Sign-in failed');
         localStorage.setItem('qbytes-session', data.token);
         localStorage.setItem('qbytes-user-email', data.user.email);
+        updateTopProfile();
         alert(data.message);
         closeAuth();
       } catch(error) {
@@ -903,5 +902,5 @@
       fetch('/api/health').catch(() => {});
 </script>
 
-</body>
+<script>function updateTopProfile(){const email=localStorage.getItem('qbytes-user-email'),btn=document.getElementById('authBtn'),p=document.getElementById('topProfile');if(!email||!p)return;btn.hidden=true;p.hidden=false;const name=email.split('@')[0];document.getElementById('topProfileName').textContent=name;document.getElementById('topAvatar').textContent=(name[0]||'Q').toUpperCase();}function initAdvantage(){const size=document.getElementById('searchSize'),target=document.getElementById('targetPos'),run=document.getElementById('advRun');if(!size)return;function draw(){const n=+size.value,pos=+target.value,cl=Math.max(1,Math.round(n/2)),gr=Math.max(1,Math.round(Math.PI*Math.sqrt(n)/4)),ratio=(cl/gr).toFixed(1);document.getElementById('databaseValue').textContent=n.toLocaleString();document.getElementById('targetValue').textContent=pos+'%';document.getElementById('classicalSteps').textContent=cl.toLocaleString()+' checks';document.getElementById('quantumSteps').textContent=gr.toLocaleString()+' iterations';document.getElementById('advRatio').textContent=ratio+'×';document.getElementById('comparisonResult').textContent=`For ${n.toLocaleString()} items, the idealized Grover model uses about ${ratio}× fewer oracle iterations than average classical search.`;const c=document.getElementById('advantageCanvas'),ctx=c.getContext('2d'),w=c.clientWidth||700,h=c.height;c.width=w;ctx.clearRect(0,0,w,h);const max=Math.max(cl,gr),pad=42;ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--cyan');ctx.fillRect(pad,20,(w-pad*2)*(cl/max),30);ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--violet');ctx.fillRect(pad,90,(w-pad*2)*(gr/max),30);ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--ink');ctx.font='700 12px system-ui';ctx.fillText('Classical',pad,15);ctx.fillText('Grover',pad,85);const tx=pad+(w-pad*2)*(pos/100);ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--yellow');ctx.beginPath();ctx.moveTo(tx,5);ctx.lineTo(tx,h-5);ctx.stroke();}size.addEventListener('input',draw);target.addEventListener('input',draw);run.addEventListener('click',draw);draw();}document.addEventListener('DOMContentLoaded',()=>{updateTopProfile();initAdvantage();});</script></body>
 </html>

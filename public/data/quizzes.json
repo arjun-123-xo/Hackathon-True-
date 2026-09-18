@@ -10,7 +10,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 1
+      "id": 1,
+      "topic": "Foundations"
     },
     {
       "q": "Which property allows a qubit to exist in multiple states at once?",
@@ -22,7 +23,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 2
+      "id": 2,
+      "topic": "Foundations"
     },
     {
       "q": "What does a Hadamard (H) gate do to |0⟩?",
@@ -34,7 +36,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 3
+      "id": 3,
+      "topic": "Foundations"
     },
     {
       "q": "Which gate acts as a quantum NOT gate?",
@@ -46,7 +49,8 @@
       ],
       "ans": 0,
       "diff": "easy",
-      "id": 4
+      "id": 4,
+      "topic": "Foundations"
     },
     {
       "q": "What happens when a quantum state is measured?",
@@ -58,7 +62,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 5
+      "id": 5,
+      "topic": "Foundations"
     },
     {
       "q": "A Pauli-Z gate performs what action on |1⟩?",
@@ -70,7 +75,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 6
+      "id": 6,
+      "topic": "Foundations"
     },
     {
       "q": "How many classical outcomes can a single qubit measurement yield?",
@@ -82,7 +88,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 7
+      "id": 7,
+      "topic": "Foundations"
     },
     {
       "q": "What is Quantum Entanglement?",
@@ -94,7 +101,8 @@
       ],
       "ans": 0,
       "diff": "easy",
-      "id": 8
+      "id": 8,
+      "topic": "Foundations"
     },
     {
       "q": "Which gate takes 2 qubits as input?",
@@ -106,7 +114,8 @@
       ],
       "ans": 2,
       "diff": "easy",
-      "id": 9
+      "id": 9,
+      "topic": "Foundations"
     },
     {
       "q": "In a CNOT gate, what happens if the control qubit is |0⟩?",
@@ -118,7 +127,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 10
+      "id": 10,
+      "topic": "Foundations"
     },
     {
       "q": "What sphere is used to visually represent a single qubit state?",
@@ -130,7 +140,8 @@
       ],
       "ans": 0,
       "diff": "easy",
-      "id": 11
+      "id": 11,
+      "topic": "Foundations"
     },
     {
       "q": "What is the state vector for a qubit in equal superposition?",
@@ -142,7 +153,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 12
+      "id": 12,
+      "topic": "Foundations"
     },
     {
       "q": "What is quantum decoherence?",
@@ -154,7 +166,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 13
+      "id": 13,
+      "topic": "Foundations"
     },
     {
       "q": "Which algorithm finds items in an unstructured database?",
@@ -166,7 +179,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 14
+      "id": 14,
+      "topic": "Foundations"
     },
     {
       "q": "Shor’s algorithm is famous for solving what problem efficiently?",
@@ -178,7 +192,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 15
+      "id": 15,
+      "topic": "Foundations"
     },
     {
       "q": "What is a Bell State?",
@@ -190,7 +205,8 @@
       ],
       "ans": 0,
       "diff": "easy",
-      "id": 16
+      "id": 16,
+      "topic": "Foundations"
     },
     {
       "q": "What is the matrix representation of Pauli-X?",
@@ -202,7 +218,8 @@
       ],
       "ans": 0,
       "diff": "easy",
-      "id": 17
+      "id": 17,
+      "topic": "Foundations"
     },
     {
       "q": "What is a Toffoli gate?",
@@ -214,7 +231,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 18
+      "id": 18,
+      "topic": "Foundations"
     },
     {
       "q": "Which physical system can act as a hardware qubit?",
@@ -226,7 +244,8 @@
       ],
       "ans": 3,
       "diff": "easy",
-      "id": 19
+      "id": 19,
+      "topic": "Foundations"
     },
     {
       "q": "What unit measures quantum computational power combining qubit count and quality?",
@@ -238,7 +257,8 @@
       ],
       "ans": 1,
       "diff": "easy",
-      "id": 20
+      "id": 20,
+      "topic": "Foundations"
     },
     {
       "q": "What is the inner product of two orthogonal quantum states?",
@@ -250,7 +270,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 21
+      "id": 21,
+      "topic": "Foundations"
     },
     {
       "q": "The T gate is equivalent to the square root of which gate?",
@@ -262,7 +283,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 22
+      "id": 22,
+      "topic": "Foundations"
     },
     {
       "q": "How many complex amplitudes describe an n-qubit system state?",
@@ -274,7 +296,8 @@
       ],
       "ans": 2,
       "diff": "hard",
-      "id": 23
+      "id": 23,
+      "topic": "Foundations"
     },
     {
       "q": "In Grover’s Algorithm, what does the Oracle operator do to the target state?",
@@ -286,7 +309,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 24
+      "id": 24,
+      "topic": "Foundations"
     },
     {
       "q": "What is the speedup of Grover's Algorithm compared to classical search?",
@@ -298,7 +322,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 25
+      "id": 25,
+      "topic": "Foundations"
     },
     {
       "q": "Deutsch-Jozsa algorithm determines if a function is what?",
@@ -310,7 +335,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 26
+      "id": 26,
+      "topic": "Foundations"
     },
     {
       "q": "Quantum Fourier Transform (QFT) scales with how many gate operations for n qubits?",
@@ -322,7 +348,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 27
+      "id": 27,
+      "topic": "Foundations"
     },
     {
       "q": "What key property prevents cloning an unknown arbitrary quantum state?",
@@ -334,7 +361,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 28
+      "id": 28,
+      "topic": "Foundations"
     },
     {
       "q": "Applying H gate twice to any single-qubit state results in what?",
@@ -346,7 +374,8 @@
       ],
       "ans": 2,
       "diff": "hard",
-      "id": 29
+      "id": 29,
+      "topic": "Foundations"
     },
     {
       "q": "What is the Phase Kickback mechanism in quantum circuits?",
@@ -358,7 +387,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 30
+      "id": 30,
+      "topic": "Foundations"
     },
     {
       "q": "Quantum Phase Estimation (QPE) estimates the eigenvalue phase of what operator?",
@@ -370,7 +400,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 31
+      "id": 31,
+      "topic": "Foundations"
     },
     {
       "q": "What is the Fredkin Gate also known as?",
@@ -382,7 +413,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 32
+      "id": 32,
+      "topic": "Foundations"
     },
     {
       "q": "Which noise model causes loss of energy in a qubit (relaxation to |0⟩)?",
@@ -394,7 +426,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 33
+      "id": 33,
+      "topic": "Foundations"
     },
     {
       "q": "What theorem states that quantum mechanics cannot be replaced by local hidden variables?",
@@ -406,7 +439,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 34
+      "id": 34,
+      "topic": "Foundations"
     },
     {
       "q": "What is the surface code used for in quantum computing?",
@@ -418,7 +452,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 35
+      "id": 35,
+      "topic": "Foundations"
     },
     {
       "q": "VQE stands for what variational NISQ algorithm?",
@@ -430,7 +465,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 36
+      "id": 36,
+      "topic": "Foundations"
     },
     {
       "q": "What classical optimization problem is QAOA designed to solve?",
@@ -442,7 +478,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 37
+      "id": 37,
+      "topic": "Foundations"
     },
     {
       "q": "In Solovay-Kitaev theorem, any single qubit gate can be approximated using a finite set with what overhead?",
@@ -454,7 +491,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 38
+      "id": 38,
+      "topic": "Foundations"
     },
     {
       "q": "What is the state |Φ+⟩ in Bell Basis?",
@@ -466,7 +504,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 39
+      "id": 39,
+      "topic": "Foundations"
     },
     {
       "q": "What is the output of H-Z-H sequence applied on |0⟩?",
@@ -478,7 +517,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 40
+      "id": 40,
+      "topic": "Foundations"
     },
     {
       "q": "What is the purpose of the Diffuser in Grover’s Algorithm?",
@@ -490,7 +530,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 41
+      "id": 41,
+      "topic": "Foundations"
     },
     {
       "q": "Quantum Supremacy / Advantage refers to what milestone?",
@@ -502,7 +543,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 42
+      "id": 42,
+      "topic": "Foundations"
     },
     {
       "q": "Which topological quasiparticle is proposed for fault-tolerant Majorana qubits?",
@@ -514,7 +556,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 43
+      "id": 43,
+      "topic": "Foundations"
     },
     {
       "q": "What matrix satisfies U * U^† = I for all valid quantum gate operators?",
@@ -526,7 +569,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 44
+      "id": 44,
+      "topic": "Foundations"
     },
     {
       "q": "What quantum state tomography technique is used to do what?",
@@ -538,7 +582,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 45
+      "id": 45,
+      "topic": "Foundations"
     },
     {
       "q": "What quantum distribution protocol is BB84?",
@@ -550,7 +595,8 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 46
+      "id": 46,
+      "topic": "Foundations"
     },
     {
       "q": "If an operator A is Hermitian, what is true about its eigenvalues?",
@@ -562,7 +608,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 47
+      "id": 47,
+      "topic": "Foundations"
     },
     {
       "q": "How many classical bits are required to teleport 1 qubit state using Quantum Teleportation?",
@@ -574,7 +621,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 48
+      "id": 48,
+      "topic": "Foundations"
     },
     {
       "q": "What is the fidelity of two identical quantum states?",
@@ -586,7 +634,8 @@
       ],
       "ans": 1,
       "diff": "hard",
-      "id": 49
+      "id": 49,
+      "topic": "Foundations"
     },
     {
       "q": "What type of quantum compiler optimizes quantum circuits for specific hardware topologies?",
@@ -598,7 +647,269 @@
       ],
       "ans": 0,
       "diff": "hard",
-      "id": 50
+      "id": 50,
+      "topic": "Foundations"
+    },
+    {
+      "id": 51,
+      "topic": "Entanglement",
+      "diff": "easy",
+      "q": "If two qubits form a Bell state, measuring one makes what about the other predictable?",
+      "options": [
+        "Nothing",
+        "Its outcome is correlated",
+        "It disappears",
+        "It becomes a photon"
+      ],
+      "ans": 1
+    },
+    {
+      "id": 52,
+      "topic": "Measurement",
+      "diff": "easy",
+      "q": "Why are repeated shots useful?",
+      "options": [
+        "Estimate probabilities",
+        "Increase qubit count",
+        "Remove gates",
+        "Create entanglement"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 53,
+      "topic": "Measurement",
+      "diff": "hard",
+      "q": "An observable is represented by which type of operator?",
+      "options": [
+        "Hermitian",
+        "Random",
+        "Nonlinear",
+        "Singular"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 54,
+      "topic": "Phase",
+      "diff": "hard",
+      "q": "Which gate changes phase without a bit flip?",
+      "options": [
+        "Z",
+        "X",
+        "SWAP",
+        "CNOT"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 55,
+      "topic": "Noise",
+      "diff": "easy",
+      "q": "T1 relaxation is mainly associated with what?",
+      "options": [
+        "Energy relaxation",
+        "Phase estimation",
+        "Entanglement",
+        "Search"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 56,
+      "topic": "Noise",
+      "diff": "hard",
+      "q": "T2 is mainly associated with what?",
+      "options": [
+        "Dephasing",
+        "Factoring",
+        "Qubit creation",
+        "Sorting"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 57,
+      "topic": "Error Correction",
+      "diff": "easy",
+      "q": "What does a syndrome help identify?",
+      "options": [
+        "Errors",
+        "The exact logical state",
+        "Internet speed",
+        "Temperature"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 58,
+      "topic": "Hardware",
+      "diff": "easy",
+      "q": "Which platform uses laser-controlled ions?",
+      "options": [
+        "Trapped ions",
+        "Classical RAM",
+        "Web server",
+        "Fiber only"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 59,
+      "topic": "Hardware",
+      "diff": "hard",
+      "q": "Gate fidelity measures what?",
+      "options": [
+        "Closeness to intended operation",
+        "Qubit count",
+        "Temperature",
+        "Clock speed"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 60,
+      "topic": "Communication",
+      "diff": "easy",
+      "q": "BB84 is a protocol for what?",
+      "options": [
+        "Quantum key distribution",
+        "Sorting",
+        "QFT",
+        "Compression"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 61,
+      "topic": "Communication",
+      "diff": "hard",
+      "q": "Why does teleportation require classical communication?",
+      "options": [
+        "To send measurement results",
+        "To move matter instantly",
+        "To bypass measurement",
+        "To remove noise"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 62,
+      "topic": "Algorithms",
+      "diff": "hard",
+      "q": "What does amplitude amplification do?",
+      "options": [
+        "Boosts marked-state amplitude",
+        "Deletes amplitudes",
+        "Measures early",
+        "Creates bits"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 63,
+      "topic": "Complexity",
+      "diff": "hard",
+      "q": "BQP describes problems solvable by quantum computers with what property?",
+      "options": [
+        "Polynomial time with bounded error",
+        "Only exponential time",
+        "No measurements",
+        "No gates"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 64,
+      "topic": "Applications",
+      "diff": "easy",
+      "q": "Quantum simulation is studied for which field?",
+      "options": [
+        "Chemistry",
+        "Word processing",
+        "Web design",
+        "Email"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 65,
+      "topic": "Applications",
+      "diff": "hard",
+      "q": "What does NISQ describe?",
+      "options": [
+        "Noisy near-term quantum processors",
+        "Perfect quantum computers",
+        "Classical CPUs",
+        "Cryptographic keys"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 66,
+      "topic": "Algorithms",
+      "diff": "easy",
+      "q": "QAOA targets which broad class of tasks?",
+      "options": [
+        "Combinatorial optimization",
+        "Image compression",
+        "Sorting text",
+        "Cooling chips"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 67,
+      "topic": "Circuits",
+      "diff": "hard",
+      "q": "Circuit depth counts what?",
+      "options": [
+        "Sequential gate layers",
+        "Number of wires",
+        "Only measurements",
+        "Number of chips"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 68,
+      "topic": "States",
+      "diff": "easy",
+      "q": "The Born rule connects amplitudes to what?",
+      "options": [
+        "Probabilities",
+        "Temperatures",
+        "Gate count",
+        "Clock cycles"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 69,
+      "topic": "Gates",
+      "diff": "easy",
+      "q": "Which gate is a controlled-SWAP?",
+      "options": [
+        "Fredkin",
+        "Toffoli",
+        "Hadamard",
+        "Z"
+      ],
+      "ans": 0
+    },
+    {
+      "id": 70,
+      "topic": "Gates",
+      "diff": "hard",
+      "q": "How many qubits does a Toffoli gate act on?",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "1"
+      ],
+      "ans": 1
     }
-  ]
+  ],
+  "total": 70
 }

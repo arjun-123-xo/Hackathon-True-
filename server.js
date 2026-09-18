@@ -12,6 +12,7 @@ const PUBLIC_DIR = path.join(__dirname, "public");
 app.use(express.json({ limit: "1mb" }));
 
 const sessions = new Map();
+const profiles = new Map();
 const quizAttempts = new Map();
 
 function clamp(n, min, max) {
@@ -122,6 +123,8 @@ function normalizeGateList(circuit, n) {
           g.qubits.every(q => Number.isInteger(q) && q >= 0 && q < n)) {
         normalized.push({ ...g, gate:"CX", qubits:g.qubits.slice(0,2) });
       }
+    } else if (["CZ"].includes(g.gate)) { if(g.qubits.length>=2 && new Set(g.qubits.slice(0,2)).size===2 && g.qubits.slice(0,2).every(q=>Number.isInteger(q)&&q>=0&&q<n)) normalized.push({...g,qubits:g.qubits.slice(0,2)});
+    } else if (["TOFFOLI","FREDKIN","CCZ","MCX","MCSWAP","MCZ"].includes(g.gate)) { const need={TOFFOLI:3,FREDKIN:3,CCZ:3,MCX:4,MCSWAP:4,MCZ:4}[g.gate]; if(g.qubits.length>=need && new Set(g.qubits.slice(0,need)).size===need && g.qubits.slice(0,need).every(q=>Number.isInteger(q)&&q>=0&&q<n)) normalized.push({...g,qubits:g.qubits.slice(0,need)});
     } else if (g.gate === "SWAP") {
       if (g.qubits.length >= 2 && g.qubits[0] !== g.qubits[1] &&
           g.qubits.every(q => Number.isInteger(q) && q >= 0 && q < n)) {
@@ -132,6 +135,10 @@ function normalizeGateList(circuit, n) {
   return normalized;
 }
 
+function applyControlledX(state,controls,target){const out=state.map(z=>({...z})),tm=1<<target;for(let i=0;i<state.length;i++)if(controls.every(c=>(i&(1<<c))!==0)&&(i&tm)===0){const j=i|tm;out[i]=state[j];out[j]=state[i];}return out;}
+function applyCZ(state,a,b){const out=state.map(z=>({...z}));for(let i=0;i<state.length;i++)if((i&(1<<a))&&(i&(1<<b)))out[i]={re:-state[i].re,im:-state[i].im};return out;}
+function applyCCZ(state,qs){const out=state.map(z=>({...z}));for(let i=0;i<state.length;i++)if(qs.every(c=>(i&(1<<c))!==0))out[i]={re:-state[i].re,im:-state[i].im};return out;}
+function applyCSWAP(state,control,a,b){const out=state.map(z=>({...z})),mc=1<<control,ma=1<<a,mb=1<<b;for(let i=0;i<state.length;i++)if((i&mc)&&(((i&ma)!==0)!==((i&mb)!==0))){const j=i^ma^mb;if(i<j){out[i]=state[j];out[j]=state[i];}}return out;}
 function simulate(n, circuit, shots = 1000, mode = "simulator") {
   n = clamp(Number(n) || 2, 1, 4);
   shots = clamp(Number(shots) || 1000, 100, 10000);
@@ -142,6 +149,11 @@ function simulate(n, circuit, shots = 1000, mode = "simulator") {
     if (MATRICES[g.gate]) state = applySingle(state, n, g.qubits[0], MATRICES[g.gate]);
     else if (g.gate === "CX") state = applyCX(state, g.qubits[0], g.qubits[1]);
     else if (g.gate === "SWAP") state = applySWAP(state, g.qubits[0], g.qubits[1]);
+    else if (g.gate === "CZ") state = applyCZ(state,g.qubits[0],g.qubits[1]);
+    else if (g.gate === "TOFFOLI") state = applyControlledX(state,g.qubits.slice(0,2),g.qubits[2]);
+    else if (g.gate === "MCX") state = applyControlledX(state,g.qubits.slice(0,-1),g.qubits[g.qubits.length-1]);
+    else if (g.gate === "CCZ" || g.gate === "MCZ") state = applyCCZ(state,g.qubits);
+    else if (g.gate === "FREDKIN" || g.gate === "MCSWAP") state = applyCSWAP(state,g.qubits[0],g.qubits[1],g.qubits[2]);
   }
 
   const probabilities = state.map(abs2);
@@ -393,6 +405,7 @@ app.post("/api/auth/email", (req,res) => {
     return res.status(400).json({ok:false,error:"Please enter a valid email address."});
   }
   const token = crypto.randomBytes(24).toString("hex");
+  profiles.set(email,{email,name:email.split("@")[0],avatar:(email[0]||"Q").toUpperCase(),joinedAt:Date.now()});
   sessions.set(token,{email,createdAt:Date.now()});
   res.json({
     ok:true,
@@ -401,6 +414,8 @@ app.post("/api/auth/email", (req,res) => {
     message:"Demo sign-in session created. Connect an email provider before using this for real passwordless authentication."
   });
 });
+
+app.get("/api/profile",(req,res)=>{const token=String(req.headers.authorization||"").replace(/^Bearer\s+/i,"");const session=sessions.get(token);if(!session)return res.status(401).json({ok:false,error:"Not signed in"});res.json({ok:true,user:profiles.get(session.email)});});
 
 app.use(express.static(PUBLIC_DIR));
 
